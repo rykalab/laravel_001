@@ -42,6 +42,7 @@ class CategoriesController extends Controller
         $category-> name = $request -> name;
         $category-> save();
         return redirect( route('categories.index') );
+
     }
     public function destroy(Category $category)
     {

@@ -33,6 +33,8 @@ Route::get('/categories/{category}/edit','CategoriesController@edit')
 
 Route::put('/categories/{category}','CategoriesController@update')
     ->name('categories.update');
-    
+
 Route::delete('/categories/{category}','CategoriesController@destroy')
     ->name('categories.destroy');
+Route::resource('articles', 'ArticlesController');
+
