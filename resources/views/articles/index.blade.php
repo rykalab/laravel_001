@@ -9,6 +9,7 @@
         <th>Id</th>
         <th>Title</th>
         <th>Body</th>
+        <th>Category</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -17,6 +18,7 @@
         <td>{{$article->id}}</td>
         <td>{{$article->title}}</td>
         <td>{{$article->body}}</td>
+        <td>{{$article->category_id}}</td>
         <td>
             <a class="btn btn-primary" href="{{ route('articles.edit', $article->id) }}">Edit</a>
         </td>
@@ -29,6 +31,7 @@
         </td>
     </tr>
 @endforeach
+
 </table>
     {{$articles->links()}}
 @endsection

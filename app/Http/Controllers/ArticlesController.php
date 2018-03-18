@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
@@ -28,7 +29,10 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $categories = Category::all();
+        return view('articles.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -41,6 +45,7 @@ class ArticlesController extends Controller
     {
         $article = new article();
         $article -> title = $request->title;
+        $article -> category_id = $request->category_id;
         $article -> body = $request->body;
         $article -> save();
         return redirect( route('articles.index') );
@@ -65,9 +70,10 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('articles.edit', [
-            'article' => $article
-        ]);
+        $categories = Category::all();
+        return view('articles.edit',
+        ['article' => $article],
+        ['categories' => $categories]);
     }
 
     /**
@@ -80,6 +86,7 @@ class ArticlesController extends Controller
     public function update(Request $request, Article $article)
     {
         $article-> title = $request -> title;
+        $article-> category_id = $request -> category_id;
         $article-> body = $request -> body;
         $article-> save();
         return redirect( route('articles.index') );
