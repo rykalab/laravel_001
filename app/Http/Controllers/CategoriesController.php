@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoriesRequest;
 
 class CategoriesController extends Controller
 {
@@ -19,7 +20,7 @@ class CategoriesController extends Controller
     {
         return view('categories.create');
     }
-    public function store(Request $request)
+    public function store(CategoriesRequest $request)
     {
         $category = new Category();
         $category -> name = $request->name;
@@ -37,12 +38,11 @@ class CategoriesController extends Controller
             'category' => $category
         ]);
     }
-    public function update(Request $request, Category $category)
+    public function update(CategoriesRequest $request, Category $category)
     {
         $category-> name = $request -> name;
         $category-> save();
         return redirect( route('categories.index') );
-
     }
     public function destroy(Category $category)
     {

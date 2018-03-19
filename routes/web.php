@@ -19,6 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(
+    ['middleware' => 'auth'
+], function () {
+
 Route::get('/categories','CategoriesController@index')
     ->name('categories.index');
 
@@ -37,4 +41,6 @@ Route::put('/categories/{category}','CategoriesController@update')
 Route::delete('/categories/{category}','CategoriesController@destroy')
     ->name('categories.destroy');
 Route::resource('articles', 'ArticlesController');
+Route::resource('users', 'UsersController');
 
+});

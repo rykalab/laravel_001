@@ -18,7 +18,11 @@
         <td>{{$article->id}}</td>
         <td>{{$article->title}}</td>
         <td>{{$article->body}}</td>
-        <td>{{$article->category_id}}</td>
+        <td>
+            @if ($article->category)
+                {{$article->category->name}}
+            @endif
+        </td>
         <td>
             <a class="btn btn-primary" href="{{ route('articles.edit', $article->id) }}">Edit</a>
         </td>

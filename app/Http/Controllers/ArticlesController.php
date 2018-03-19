@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\ArticlesRequest;
 
 class ArticlesController extends Controller
 {
@@ -15,7 +16,8 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::paginate(10);
+        $articles = Article::with('category')
+                            ->paginate(10);
         //dump($articles);
         return view('articles.index',[
             'articles' => $articles
@@ -41,13 +43,14 @@ class ArticlesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticlesRequest $request)
     {
-        $article = new article();
-        $article -> title = $request->title;
-        $article -> category_id = $request->category_id;
-        $article -> body = $request->body;
-        $article -> save();
+        // $article = new Article();
+        // $article -> title = $request->title;
+        // $article -> category_id = $request->category_id;
+        // $article -> body = $request->body;
+        // $article -> save();
+        Article::create($request->all());
         return redirect( route('articles.index') );
     }
 
@@ -83,12 +86,13 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticlesRequest $request, Article $article)
     {
         $article-> title = $request -> title;
         $article-> category_id = $request -> category_id;
         $article-> body = $request -> body;
         $article-> save();
+        $article->update($request->all());
         return redirect( route('articles.index') );
     }
 
