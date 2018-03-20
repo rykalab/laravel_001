@@ -85,7 +85,6 @@ class UsersController extends Controller
         $user-> save();
         return redirect( route('users.index') );
     }
-
     /**
      * Remove the specified resource from storage.
      *
