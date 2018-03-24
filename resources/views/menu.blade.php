@@ -6,7 +6,7 @@
                     <a class="nav-item nav-link" href="/articles">Artykuły</a>
                     <a class="nav-item nav-link" href="/users">Użytkownicy</a>
                     <a class="nav-item nav-link" href="/comments">Komentarze</a>
-                    <a class="nav-item nav-link" href="">Inne</a>
+                    <a class="nav-item nav-link" href="/files/create">Dodaj pliki</a>
                 </div>
             </div>
         </div>

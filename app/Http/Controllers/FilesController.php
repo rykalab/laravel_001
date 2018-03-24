@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\File;
 use Illuminate\Http\Request;
-use App\Http\Requests\UsersRequest;
-use App\Http\Controllers\UsersController;
-use App\Http\Requests\UsersRequestUpdate;
-use App\Rules\UniqueEmail;
-
-class UsersController extends Controller
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+class FilesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +15,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
-        //dump($users);
-        return view('users.index',[
-            'users' => $users
-        ]);
+        $files = File::paginate(10);
+        return view('files.index',
+        ['files' => $files]
+    );
+
     }
 
     /**
@@ -32,8 +29,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        return view('users.create');
+        return view('files.create');
     }
 
     /**
@@ -42,10 +38,22 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UsersRequest $request)
+    public function store(Request $request)
     {
-        User::create($request->all());
-        return redirect( route('users.index') );
+        $fileName = Storage::disk('public')->put('',$request->file('file_name'));
+        $thumbPath = storage_path('app/public/thumbs').'/thumb_'. $fileName;
+
+        $manager = new ImageManager(array('driver' => 'gd'));
+        $image = $manager
+        ->make($request->file('file_name'))
+        ->resize(300, 200)
+        ->save($thumbPath);
+
+        $file = new File();
+        $file->file_name = $fileName;
+        $file->save();
+
+        return redirect( route('files.index') );
     }
 
     /**
@@ -65,11 +73,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        return view('users.edit', [
-            'user' => $user
-        ]);
+        //
     }
 
     /**
@@ -79,13 +85,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UsersRequestUpdate $request,User $user)
+    public function update(Request $request, $id)
     {
-        $user-> name = $request -> name;
-        $user-> email = $request -> email;
-        $user-> password = bcrypt($request -> password);
-        $user-> save();
-        return redirect( route('users.index') );
+        //
     }
 
     /**
@@ -94,9 +96,8 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        $user->delete();
-        return redirect( route('users.index') );
+        //
     }
 }

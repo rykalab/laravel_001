@@ -72,8 +72,7 @@ class CommentsController extends Controller
         $articles = Article::all();
         return view('comments.edit',
         ['comment' => $comment],
-        ['articles' => $articles]
-    );
+        ['articles' => $articles]);
     }
 
     /**
@@ -86,7 +85,7 @@ class CommentsController extends Controller
     public function update(Request $request, Comment $comment)
     {
         $comment->update($request->all());
-        return redirect( route('comments.index') );
+        
     }
 
     /**
