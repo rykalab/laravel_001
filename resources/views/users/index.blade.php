@@ -1,5 +1,4 @@
 @extends('layouts.app') @section('title','Userzy') @section('content')
-
 <a href="{{ route('users.create')}}" class="btn btn-success">Dodaj</a><br/><br/>
 <table class="table table-hover">
     <tr>

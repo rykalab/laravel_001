@@ -71,6 +71,7 @@
             </div>
         </nav>
         <div class="container">
+            @include('menu')
             @yield('content')
         </div>
     </div>

@@ -42,5 +42,6 @@ Route::delete('/categories/{category}','CategoriesController@destroy')
     ->name('categories.destroy');
 Route::resource('articles', 'ArticlesController');
 Route::resource('users', 'UsersController');
+Route::resource('comments', 'CommentsController');
 
 });

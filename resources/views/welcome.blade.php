@@ -81,7 +81,13 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
-
+                <div class="links">
+                    <a href="/categories">Kategorie</a>
+                    <a href="/articles">Artykuły</a>
+                    <a href="/users">Użytkownicy</a>
+                    <a href="/comments">Komentarze</a>
+                    <a href="">Inne</a>
+                </div>
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
