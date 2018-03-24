@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 class FilesController extends Controller
+
 {
     /**
      * Display a listing of the resource.
@@ -96,8 +97,14 @@ class FilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(File $file)
     {
-        //
+
+        $fileName = $file->file_name;
+        $thumbPath = '/thumbs/thumb_'. $fileName;
+        $filePath = $fileName;
+        $file->delete();
+        Storage::disk('public')->delete([$filePath, $thumbPath]);
+        return redirect( route('files.index') );
     }
 }
