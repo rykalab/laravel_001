@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\Article;
 use App\Category;
 use Illuminate\Http\Request;
@@ -31,9 +32,11 @@ class ArticlesController extends Controller
      */
     public function create()
     {
+        $files = File::all();
         $categories = Category::all();
         return view('articles.create', [
-            'categories' => $categories
+            'categories' => $categories,
+            'files' => $files
         ]);
     }
 
@@ -50,7 +53,8 @@ class ArticlesController extends Controller
         // $article -> category_id = $request->category_id;
         // $article -> body = $request->body;
         // $article -> save();
-        Article::create($request->all());
+        $article = Article::create($request->all());
+        $article->files()->attach($request->get('files_id'));
         return redirect( route('articles.index') );
     }
 
@@ -74,9 +78,20 @@ class ArticlesController extends Controller
     public function edit(Article $article)
     {
         $categories = Category::all();
+        $files = File::all();
+
+       // dd($article->files()->get()->toArray());
+        $flatSelectedFiles = [];
+        $selectedFiles = $article->files()->get()->toArray();
+        foreach ($selectedFiles as $selectedFile) {
+            $flatSelectedFiles[] = $selectedFile['id'];
+        }
+        //dd($flatSelectedFiles);
         return view('articles.edit',
-        ['article' => $article],
-        ['categories' => $categories]);
+        ['article' => $article,
+        'categories' => $categories,
+        'flatSelectedFiles' => $flatSelectedFiles,
+        'files' => $files]);
     }
 
     /**

@@ -74,9 +74,12 @@ class FilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(File $file)
     {
-        //
+        // $fileName = $file->file_name;
+        // dd($fileName);
+        return view('files.edit',
+        ['file' => $file]);
     }
 
     /**
@@ -86,9 +89,22 @@ class FilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, File $file)
     {
-        //
+        Storage::disk('public')->delete([$file->file_name, '/thumbs/thumb_'.$file->file_name]);
+        $fileName = Storage::disk('public')->put('',$request->file('file_name'));
+        $thumbPath = storage_path('app/public/thumbs').'/thumb_'. $fileName;
+
+        $manager = new ImageManager(array('driver' => 'gd'));
+        $image = $manager
+        ->make($request->file('file_name'))
+        ->resize(300, 200)
+        ->save($thumbPath);
+
+        $file->file_name = $fileName;
+        $file->save();
+
+        return redirect( route('files.index') );
     }
 
     /**
@@ -99,12 +115,15 @@ class FilesController extends Controller
      */
     public function destroy(File $file)
     {
-
+        // $fileName = $file->file_name;
+        // $thumbPath = '/thumbs/thumb_'. $fileName;
+        // $filePath = $fileName;
+        // $file->delete();
+        // Storage::disk('public')->delete([$filePath, $thumbPath]);
+        // return redirect( route('files.index') );
         $fileName = $file->file_name;
-        $thumbPath = '/thumbs/thumb_'. $fileName;
-        $filePath = $fileName;
         $file->delete();
-        Storage::disk('public')->delete([$filePath, $thumbPath]);
+        Storage::disk('public')->delete([$fileName, '/thumb/thumb_'.$fileName]);
         return redirect( route('files.index') );
     }
 }

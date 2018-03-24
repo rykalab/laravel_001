@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\File;
+use App\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -11,5 +13,10 @@ class Article extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class);
     }
 }
