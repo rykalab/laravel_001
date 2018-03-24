@@ -44,4 +44,5 @@ Route::resource('articles', 'ArticlesController');
 Route::resource('users', 'UsersController');
 Route::resource('comments', 'CommentsController');
 Route::resource('files', 'FilesController');
+Route::resource('roles', 'RolesController');
 });

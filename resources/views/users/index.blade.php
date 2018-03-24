@@ -5,6 +5,7 @@
         <th>Id</th>
         <th>Name</th>
         <th>E-mail</th>
+        <th>Role</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -13,6 +14,11 @@
         <td>{{$user->id}}</td>
         <td>{{$user->name}}</td>
         <td>{{$user->email}}</td>
+        <td>
+            {{--  @if ($user->role)
+                {{$user->role()->first()->name}}
+            @endif  --}}
+        </td>
         <td>
             <a href="{{ route('users.edit', $user->id)}}" class="btn btn-primary">Edit</a>
         </td>

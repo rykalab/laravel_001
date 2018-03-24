@@ -81,16 +81,17 @@ class ArticlesController extends Controller
         $files = File::all();
 
        // dd($article->files()->get()->toArray());
-        $flatSelectedFiles = [];
-        $selectedFiles = $article->files()->get()->toArray();
-        foreach ($selectedFiles as $selectedFile) {
-            $flatSelectedFiles[] = $selectedFile['id'];
-        }
+        // $flatSelectedFiles = [];
+        // $selectedFiles = $article->files()->get()->toArray();
+        // foreach ($selectedFiles as $selectedFile) {
+        //     $flatSelectedFiles[] = $selectedFile['id'];
+        // }
         //dd($flatSelectedFiles);
+        //$selectedFiles = $article->files()->pluck('id')->toArray()
         return view('articles.edit',
         ['article' => $article,
         'categories' => $categories,
-        'flatSelectedFiles' => $flatSelectedFiles,
+        'flatSelectedFiles' => $article->files()->pluck('id')->toArray(),
         'files' => $files]);
     }
 
@@ -103,11 +104,12 @@ class ArticlesController extends Controller
      */
     public function update(ArticlesRequest $request, Article $article)
     {
-        $article-> title = $request -> title;
-        $article-> category_id = $request -> category_id;
-        $article-> body = $request -> body;
-        $article-> save();
+        // $article-> title = $request -> title;
+        // $article-> category_id = $request -> category_id;
+        // $article-> body = $request -> body;
+        // $article-> save();
         $article->update($request->all());
+        $article->files()->sync($request->get('files_id'));
         return redirect( route('articles.index') );
     }
 

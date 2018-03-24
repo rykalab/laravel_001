@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Role;
+use App\Rules\UniqueEmail;
 use Illuminate\Http\Request;
 use App\Http\Requests\UsersRequest;
 use App\Http\Controllers\UsersController;
 use App\Http\Requests\UsersRequestUpdate;
-use App\Rules\UniqueEmail;
 
 class UsersController extends Controller
 {
@@ -18,10 +19,12 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $roles = Role::all();
         $users = User::paginate(10);
-        //dump($users);
+        //dump($users->role());
         return view('users.index',[
-            'users' => $users
+            'users' => $users,
+            'roles' => $roles,
         ]);
     }
 
@@ -33,7 +36,11 @@ class UsersController extends Controller
     public function create()
     {
         $users = User::all();
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create',[
+            'users' => $users,
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -42,10 +49,13 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UsersRequest $request)
+    public function store(UsersRequest $request,User $user)
     {
-        User::create($request->all());
-        return redirect( route('users.index') );
+       $user = User::create($request->all());
+       $user->roles()->attach($request->get('roles_id'));
+       $data = $request->all();
+       $data['password']=bcrypt($data['password']);
+    return redirect( route('users.index') );
     }
 
     /**
@@ -67,8 +77,11 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', [
-            'user' => $user
+        $users = User::all();
+        $roles = Role::all();
+        return view('users.create',[
+            'users' => $users,
+            'roles' => $roles
         ]);
     }
 
