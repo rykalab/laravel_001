@@ -12,12 +12,15 @@
           </ul>
       </div>
       @endif
+      Wpisz tytuł
       <div class="form-group">
           <input type="text" class="form-control" name="title">
       </div>
+      Wpisz treść
       <div class="form-group">
           <textarea class="form-control" rows="5" name="body"></textarea>
       </div>
+      Wybierz kategorie
       <div class="form-group">
         <select name="category_id" class="form-control" id="">
             @foreach ($categories as $category)
@@ -25,6 +28,7 @@
             @endforeach
         </select>
      </div>
+     Zaznacz pliki użyte w artykule
      <div class="form-group">
         @foreach ($files as $file)
         <label for="">

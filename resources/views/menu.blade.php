@@ -1,12 +1,7 @@
-<div class="navbar">
 
-            <div class="collapse navbar-collapse">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="/categories">Kategorie</a>
-                    <a class="nav-item nav-link" href="/articles">Artykuły</a>
-                    <a class="nav-item nav-link" href="/users">Użytkownicy</a>
-                    <a class="nav-item nav-link" href="/comments">Komentarze</a>
-                    <a class="nav-item nav-link" href="/files/create">Dodaj pliki</a>
-                </div>
-            </div>
-        </div>
+<a class="navbar-brand" href="/categories">Kategorie</a>
+<a class="navbar-brand" href="/articles">Artykuły</a>
+<a class="navbar-brand" href="/users">Użytkownicy</a>
+<a class="navbar-brand" href="/comments">Komentarze</a>
+<a class="navbar-brand" href="/files">Pliki</a>
+<a class="navbar-brand" href="/roles">Role</a>

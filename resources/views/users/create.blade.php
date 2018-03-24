@@ -18,12 +18,17 @@
         </div>
         Hasło
         <div class="form-group">
-            <input placeholder="password" type="text" class="form-control" name="password">
+            <input placeholder="password" type="password" class="form-control" name="password">
+        </div>
+        Powtórz hasło
+        <div class="form-group">
+            <input placeholder="password" type="password" class="form-control" name="password_new">
         </div>
         Email
         <div class="form-group">
             <input placeholder="email" type="text" class="form-control" name="email">
         </div>
+        Wybierz rolę
         <div class="form-group">
                 @foreach ($roles as $role)
                 {{$role->name}}

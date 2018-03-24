@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
+use App\Rules\UniqueEmail;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UsersRequest extends FormRequest
@@ -21,22 +22,25 @@ class UsersRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             'name' => 'required',
             'password' => 'required',
-            'email' => 'required|unique:users'
-            // .$this->user()->id,
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+            'password_new' => 'required|same:password',
         ];
     }
     public function messages() {
 	    return [
-            'name.required'    => 'pole wymagane',
-            'password.required' => 'pole wymagane',
-            'email.required' => 'pole wymagane',
-            'email.unique' => 'email musi byc unikatowy',
-            //'email.email' => 'dawaj emaila nie jakies gowno'
+            'name.required'    => 'Wpisz swoje imię',
+            'password.required' => 'Wpisz hasło',
+            'password_new.required' => 'Wpisz nowe hasło',
+            'password_new.same'	=> 'Wpisane hasła nie są identyczne',
+            'email.required' => 'Wprowadź email',
+            'email.unique' => 'Email jest zajęty',
+            'email.email' => 'Dawaj emaila nie jakieś gówno'
         ];
     }
 }

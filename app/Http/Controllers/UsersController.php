@@ -7,7 +7,6 @@ use App\Role;
 use App\Rules\UniqueEmail;
 use Illuminate\Http\Request;
 use App\Http\Requests\UsersRequest;
-use App\Http\Controllers\UsersController;
 use App\Http\Requests\UsersRequestUpdate;
 
 class UsersController extends Controller
@@ -17,14 +16,16 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
         $roles = Role::all();
         $users = User::paginate(10);
-        //dump($users->role());
+        //dump($roles);
+        //dump($users);
         return view('users.index',[
             'users' => $users,
             'roles' => $roles,
+            'flatSelectedRoles'=>$user->roles()->pluck('id')->toArray()
         ]);
     }
 
@@ -51,11 +52,11 @@ class UsersController extends Controller
      */
     public function store(UsersRequest $request,User $user)
     {
-       $user = User::create($request->all());
-       $user->roles()->attach($request->get('roles_id'));
-       $data = $request->all();
-       $data['password']=bcrypt($data['password']);
-    return redirect( route('users.index') );
+        $user = User::create($request->all());
+        $user->roles()->attach($request->get('roles_id'));
+        $data = $request->all();
+        $data['password']= bcrypt($data['password']);
+        return redirect( route('users.index') );
     }
 
     /**
@@ -77,11 +78,11 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        $users = User::all();
-        $roles = Role::all();
-        return view('users.create',[
-            'users' => $users,
-            'roles' => $roles
+        $roles=Role::all();
+        return view('users.edit',[
+        'user'=>$user,
+        'roles'=>$roles,
+        'flatSelectedRoles'=>$user->roles()->pluck('id')->toArray()
         ]);
     }
 
@@ -96,9 +97,14 @@ class UsersController extends Controller
     {
         $user-> name = $request -> name;
         $user-> email = $request -> email;
-        $user-> password = bcrypt($request -> password);
-        $user-> save();
+        $user-> password = bcrypt($request -> password); //bcrypt pass
+
+        $user->update($request->all());
+        $user->roles()->sync($request->get('role_id'));
         return redirect( route('users.index') );
+
+        // $user-> save();
+        // return redirect( route('users.index') );
     }
 
     /**

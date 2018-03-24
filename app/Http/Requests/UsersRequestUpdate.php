@@ -28,16 +28,17 @@ class UsersRequestUpdate extends FormRequest
                 'required',
                 new UniqueEmail($request)
             ],
-            'password' => 'required'
+            'password' => 'required',
+            'password_new' => 'required|same:password',
         ];
     }
     public function messages() {
         return [
-            'name.required' => 'pole wymagane - login',
-            'email.required' => 'pole wymagane - email',
-            'email.email' => 'podaj adres prawidlowy email',
-            'email.unique' => 'adres zajety',
-            'password.required' => 'pole wymagane - haslo',
+            'name.required' => 'Wpisz imię',
+            'email.required' => 'Wpisz email',
+            'password.required' => 'Wpisz hasło',
+            'password_new.required' => 'Wpisz nowe hasło',
+            'password_new.same'	=> 'Wpisane hasła nie są identyczne',
         ];
     }
 }

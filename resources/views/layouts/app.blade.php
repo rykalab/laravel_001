@@ -30,6 +30,7 @@
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
+                    @include('menu')
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -70,7 +71,6 @@
             </div>
         </nav>
         <div class="container">
-                @include('menu')
             @yield('content')
         </div>
     </div>

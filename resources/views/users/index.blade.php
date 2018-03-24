@@ -15,9 +15,15 @@
         <td>{{$user->name}}</td>
         <td>{{$user->email}}</td>
         <td>
-            {{--  @if ($user->role)
-                {{$user->role()->first()->name}}
-            @endif  --}}
+            @foreach($roles as $role)
+                <label>
+                    @if(in_array($role->id, $flatSelectedRoles))
+                        <input type="checkbox" checked name="role_id[]" value="{{$role->id}}"/> {{$role->name}}
+                    @else
+                        {{--  <input type="checkbox" name="role_id[]" value="{{$role->id}}"/> {{$role->name}}  --}}
+                    @endif
+                </label>
+            @endforeach
         </td>
         <td>
             <a href="{{ route('users.edit', $user->id)}}" class="btn btn-primary">Edit</a>
@@ -30,7 +36,7 @@
             </form>
         </td>
     </tr>
-
     @endforeach
 </table>
-{{$users->links()}} @endsection
+{{$users->links()}}
+@endsection

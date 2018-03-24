@@ -19,16 +19,26 @@
         </div>
         <div class="form-group">
         Hasło
-            <input placeholder="password" type="text" class="form-control" name="password" value="{{ $user->password }}">
+            <input placeholder="password" type="password" class="form-control" name="password" value="{{ $user->password }}">
          </div>
-         Email
+        Powtórz hasło
+        <div class="form-group">
+            <input placeholder="password" type="password" class="form-control" name="password_new" value="{{ $user->password }}">
+         </div>
+        Email
         <div class="form-group">
             <input placeholder="email" type="text" class="form-control" name="email" value="{{ $user->email }}">
         </div>
+        Rola
         <div class="form-group">
-            @foreach ($roles as $role)
-                {{$role->name}}
-                <input type="checkbox" name="roles_id[]" value="{{$role->id}}">
+            @foreach($roles as $role)
+                <label>
+                    @if(in_array($role->id, $flatSelectedRoles))
+                        <input type="checkbox" checked name="role_id[]" value="{{$role->id}}"/> {{$role->name}}
+                    @else
+                        <input type="checkbox" name="role_id[]" value="{{$role->id}}"/> {{$role->name}}
+                    @endif
+                </label>
             @endforeach
         </div>
         <div class="form-group">
