@@ -52,6 +52,8 @@ class UsersController extends Controller
      */
     public function store(UsersRequest $request,User $user)
     {
+        //TODO do poprawy dodawanie!! zeby encrypt sie robil 
+        //TODO poprawic zapis hasla !! jesli jest nie zmienione nie wysylaj go!!!
         $user = User::create($request->all());
         $user->roles()->attach($request->get('roles_id'));
         $data = $request->all();
@@ -95,11 +97,9 @@ class UsersController extends Controller
      */
     public function update(UsersRequestUpdate $request,User $user)
     {
-        $user-> name = $request -> name;
-        $user-> email = $request -> email;
-        $user-> password = bcrypt($request -> password); //bcrypt pass
-
-        $user->update($request->all());
+        $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
+        $user->update($data);
         $user->roles()->sync($request->get('role_id'));
         return redirect( route('users.index') );
 

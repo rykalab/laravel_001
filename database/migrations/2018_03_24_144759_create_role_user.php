@@ -19,11 +19,13 @@ class CreateRoleUser extends Migration
 
             $table->foreign('role_id')
                 ->references('id')
-                ->on('roles');
+                ->on('roles')
+                ->onDelete('CASCADE');
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('CASCADE');
         });
     }
 

@@ -85,7 +85,7 @@ class CommentsController extends Controller
     public function update(Request $request, Comment $comment)
     {
         $comment->update($request->all());
-        
+        return redirect( route('comments.index') );
     }
 
     /**

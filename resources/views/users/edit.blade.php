@@ -18,12 +18,13 @@
             <input placeholder="name" type="text" class="form-control" name="name" value="{{ $user->name }}">
         </div>
         <div class="form-group">
+            {{--  //zmienic value sprawdzic czy haslo jest zmieniane jesli nie nie updatowac na bazie  --}}
         Hasło
-            <input placeholder="password" type="password" class="form-control" name="password" value="{{ $user->password }}">
+            <input placeholder="password" type="password" class="form-control" name="password" value="">
          </div>
         Powtórz hasło
         <div class="form-group">
-            <input placeholder="password" type="password" class="form-control" name="password_new" value="{{ $user->password }}">
+            <input placeholder="password" type="password" class="form-control" name="password_new" value="">
          </div>
         Email
         <div class="form-group">

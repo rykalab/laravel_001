@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class UsersSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        //
+//dod dodania admin mod cos
     }
 }
